@@ -62,7 +62,7 @@ export class Nav extends GemElement {
       <dy-use @click=${() => (this.open = true)} .element=${icons.more}></dy-use>
       <dy-side-navigation
         @click=${{ handleEvent: () => (this.open = false), capture: true }}
-        .items=${[routes.home, routes.about]}
+        .items=${[routes.home, routes.feed, routes.feed2]}
       ></dy-side-navigation>
     `;
   }

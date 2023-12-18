@@ -10,10 +10,15 @@ render(
           'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        overflow: hidden;
         overscroll-behavior: none;
-        overflow-anchor: none;
+      }
+      html,
+      body {
+        height: 100%;
       }
       body {
+        overflow: auto;
         margin: 0;
         display: flex;
         flex-direction: column;

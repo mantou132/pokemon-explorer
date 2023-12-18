@@ -13,6 +13,10 @@ updateTheme({
 
 @customElement('app-root')
 export class App extends GemElement {
+  #onRouteChange = () => {
+    document.body.scrollTo(0, 0);
+  };
+
   render() {
     return html`
       <style>
@@ -35,7 +39,7 @@ export class App extends GemElement {
       </style>
       <ele-nav></ele-nav>
       <main>
-        <dy-route .routes=${routes} .locationStore=${locationStore} @routechange=${() => scrollTo(0, 0)}></dy-route>
+        <dy-route .routes=${routes} .locationStore=${locationStore} @routechange=${this.#onRouteChange}></dy-route>
       </main>
     `;
   }

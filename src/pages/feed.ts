@@ -30,6 +30,9 @@ import 'src/elements/card';
 export class FeedItem extends DuoyunVisibleBaseElement {}
 
 const style = createCSSSheet(css`
+  :host {
+    overflow-anchor: none;
+  }
   [hidden] {
     display: none;
   }
@@ -237,7 +240,7 @@ export class Feed extends GemElement<State> {
     return html`
       <p-feed-item
         ref=${this.beforeItemRef.ref}
-        @visible=${this.#onBeforeItemVisible}
+        @show=${this.#onBeforeItemVisible}
         style=${styleMap({ height: this.state.beforeHeight + 'px' })}
       ></p-feed-item>
       ${repeat(
@@ -255,7 +258,7 @@ export class Feed extends GemElement<State> {
       </div>
       <p-feed-item
         ref=${this.afterItemRef.ref}
-        @visible=${this.#onAfterItemVisible}
+        @show=${this.#onAfterItemVisible}
         style=${styleMap({ height: this.state.afterHeight + 'px' })}
       ></p-feed-item>
     `;

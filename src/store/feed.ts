@@ -1,11 +1,13 @@
 import { updateStore } from '@mantou/gem';
-import { createCacheStore } from 'duoyun-ui/lib/utils';
+import { createCacheStore, once, sleep } from 'duoyun-ui/lib/utils';
 
 import * as api from 'src/service/api';
+import { pokemonStore } from 'src/store/pokemon';
 
 const limit = 20;
 
 type PokemonFeedStore = {
+  futureLoading: boolean;
   loading: boolean;
   list: string[];
   offset: number;
@@ -15,12 +17,13 @@ type PokemonFeedStore = {
 export const [pokemonFeedStore] = createCacheStore<PokemonFeedStore>(
   'pokemonFeedStore4',
   {
+    futureLoading: false,
     loading: false,
+    end: false,
     list: [],
     offset: 0,
-    end: false,
   },
-  { cacheExcludeKeys: ['loading', 'end'] },
+  { cacheExcludeKeys: ['futureLoading', 'loading', 'end', 'list', 'offset'] },
 );
 
 export const fetchPokemonFeed = async () => {
@@ -36,3 +39,21 @@ export const fetchPokemonFeed = async () => {
     updateStore(pokemonFeedStore, { loading: false });
   }
 };
+
+export const fetchFuturePokemonFeed = once(async (callback?: () => void) => {
+  const first = await import('../service/item.json');
+  updateStore(pokemonFeedStore, { futureLoading: true });
+  await sleep(1000);
+  const list = Array.from({ length: 20 }, (_, index) => {
+    const id = 0 - (index + 1);
+    const item = { ...first, id, name: String(id) };
+    pokemonStore.pokemon[id] = item;
+    return String(id);
+  }).reverse();
+  console.log('fetchFuturePokemonFeed', list);
+  updateStore(pokemonFeedStore, {
+    list: list.concat(pokemonFeedStore.list),
+    futureLoading: false,
+  });
+  callback?.();
+});

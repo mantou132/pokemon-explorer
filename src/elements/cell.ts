@@ -30,7 +30,7 @@ export class AppCellElement extends DuoyunVisibleBaseElement {
 
   constructor() {
     super();
-    this.addEventListener('visible', this.#onVisible, { once: true });
+    this.addEventListener('show', this.#onVisible, { once: true });
   }
 
   get #data() {

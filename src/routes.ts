@@ -12,7 +12,7 @@ const home: RouteItem = {
   },
 };
 
-const about: RouteItem = {
+const feed: RouteItem = {
   title: 'Feed',
   pattern: '/feed',
   async getContent() {
@@ -21,7 +21,17 @@ const about: RouteItem = {
   },
 };
 
+const feed2: RouteItem = {
+  title: 'Feed2',
+  pattern: '/feed2',
+  async getContent() {
+    await import(/* webpackPrefetch: true */ 'src/pages/feed2');
+    return html`<p-feed2></p-feed2>`;
+  },
+};
+
 export default {
   home,
-  about,
+  feed,
+  feed2,
 };
